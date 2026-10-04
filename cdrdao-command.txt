@@ -1,0 +1,8 @@
+I didn't bother trying to get cdrdao working on Windows.  I hooked up a USB external burner
+to my PlayStation 5 and did this from PS5 Linux.
+
+First do a test burn with a blank CD-R inserted, replacing /dev/meow with your burner's devnode.
+
+/your/built/cdrdao simulate --device /dev/meow --driver generic-mmc-raw --libby-hack -n silence.toc
+
+Replace "simulate" with "write" to do the actual write.

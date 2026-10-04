@@ -1,0 +1,85 @@
+diff --git a/dao/PQChannelEncoder.cc b/dao/PQChannelEncoder.cc
+index 8590564..9d71450 100644
+--- a/dao/PQChannelEncoder.cc
++++ b/dao/PQChannelEncoder.cc
+@@ -30,6 +30,8 @@
+ #include "log.h"
+ 
+ 
++bool g_libbyHack = false;
++
+ PQChannelEncoder::PQChannelEncoder() 
+ {
+   cueSheet_ = NULL;
+@@ -138,9 +140,16 @@ int PQChannelEncoder::setCueSheet(SubChannel *chan, unsigned char discType,
+   tocEnt++;
+ 
+   toc_[tocEnt]->point(0xa2);
+-  toc_[tocEnt]->pmin(leadOutStart_.min());
+-  toc_[tocEnt]->psec(leadOutStart_.sec());
+-  toc_[tocEnt]->pframe(leadOutStart_.frac());
++  if (g_libbyHack) {
++    log_message(1, "Libby Hack: setting TOC A2 point to 00:01:74");
++    toc_[tocEnt]->pmin(0);
++    toc_[tocEnt]->psec(1);
++    toc_[tocEnt]->pframe(74);
++  } else {
++    toc_[tocEnt]->pmin(leadOutStart_.min());
++    toc_[tocEnt]->psec(leadOutStart_.sec());
++    toc_[tocEnt]->pframe(leadOutStart_.frac());
++  }
+   toc_[tocEnt]->ctl(leadOutCtlAdr_ & 0xf0);
+   tocEnt++;
+ 
+diff --git a/dao/main.cc b/dao/main.cc
+index e11ad5c..045e0d5 100644
+--- a/dao/main.cc
++++ b/dao/main.cc
+@@ -67,6 +67,8 @@
+ 
+ using namespace std;
+ 
++extern bool g_libbyHack;
++
+ namespace {
+ 
+ #ifdef UNIXWARE
+@@ -199,6 +201,7 @@ struct DaoCommandLine
+     bool keep;
+     bool printQuery;
+     bool no_utf8;
++    bool libbyHack;
+ 
+     CdrDriver::BlankingMode blankingMode;
+     TrackData::SubChannelMode readSubchanMode;
+@@ -217,7 +220,7 @@ DaoCommandLine::DaoCommandLine() :
+     readRaw(false), mode2Mixed(false), remoteMode(false),
+     reload(false), force(false), onTheFly(false), writeSimulate(false), saveSettings(false),
+     fullBurn(false), withCddb(false), taoSource(false), keepImage(false), overburn(false),
+-    writeSpeedControl(false), keep(false), printQuery(false), no_utf8(false)
++    writeSpeedControl(false), keep(false), printQuery(false), no_utf8(false), libbyHack(false)
+ {
+     dataFilename = NULL;
+     sourceScsiDevice = NULL;
+@@ -990,6 +993,9 @@ int DaoCommandLine::parseCmdLine(int argc, char **argv,
+ 	    else if (strcmp((*argv) + 2, "no-utf8") == 0) {
+ 		no_utf8 = true;
+ 	    }
++	    else if (strcmp((*argv) + 2, "libby-hack") == 0) {
++		libbyHack = true;
++	    }
+ 	    else if (strcmp((*argv) + 2, "force") == 0) {
+ 		force = true;
+ 	    }
+@@ -2848,6 +2854,11 @@ int main(int argc, char **argv)
+ 	    }
+ 	}
+ 
++	if (options.libbyHack) {
++	    log_message(1, "Enabling Libby hack.");
++	    g_libbyHack = true;
++	}
++
+ 	cdr->bufferUnderRunProtection(options.bufferUnderrunProtection);
+ 	cdr->writeSpeedControl(options.writeSpeedControl);
+ 
