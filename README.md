@@ -6,14 +6,14 @@ hardware (**Mecha**nics **Con**troller) and MagicGate encryption.
 > [!CAUTION]
 > **THIS TOOL MIGHT DAMAGE YOUR PLAYSTATION 2.** It intentionally asks the DVD
 > drive to do a physically impossible motion that theoretically could damage
-> drive sled or motor.  The tool immediately aborts the request after making
+> the drive sled or motor.  The tool immediately aborts the request after making
 > it, but there's no guarantee that this prevents all possible damage.
 > 
-> USE AT YOUR OWN RISK.
+> **USE AT YOUR OWN RISK.**
 
 The PS2 has two major variants of Mechacon: one using an SPC970 microcontroller
 and one using an ARM7TDMI microcontroller.  SPC970s were used for the SCPH-10000
-series through SCPH-39000, whereas ARM7TDMI chips--code named "Dragon"--were
+series through SCPH-39000, whereas ARM7TDMI chips—code named "Dragon"—were
 used on SCPH-50000 and later.
 
 ## Which kind do I have?
