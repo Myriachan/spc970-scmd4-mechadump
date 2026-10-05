@@ -376,11 +376,8 @@ int main(void) {
   DumpData(outputFile, outputRamfile, 0x000000, 0x3000);
   /* Dump ROM.
      The S command 0x04 handler uses 16-bit pointer arithmetic, so we can't read e.g. 0xFCFFFF
-     and expect to get 0xFCFFFF-0xFD0002; we'd get 0xFC0000 and 0xFC0001 again.
-     Additionally, note that Mechacon version 3+ only have a 192 KiB ROM. */
-  if (mechaconVersion.major < 3) {
-    DumpData(outputFile, outputBinfile, 0xFC0000, 0x10000);
-  }
+     and expect to get 0xFCFFFF-0xFD0002; we'd get 0xFC0000 and 0xFC0001 again. */
+  DumpData(outputFile, outputBinfile, 0xFC0000, 0x10000);
   DumpData(outputFile, outputBinfile, 0xFD0000, 0x10000);
   DumpData(outputFile, outputBinfile, 0xFE0000, 0x10000);
   DumpData(outputFile, outputBinfile, 0xFF0000, 0x10000);
