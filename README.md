@@ -277,4 +277,4 @@ aborting.
  * [l_oliveira](https://github.com/7l-oliveira): testing, history, hardware information
  * [DiscoStarslayer](https://github.com/DiscoStarslayer):
    [SPC970 decompiler](https://github.com/DiscoStarslayer/ghidra-spc970), organization,
-   helped with early dumps
+   optical dumps
