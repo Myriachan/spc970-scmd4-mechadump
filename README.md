@@ -94,7 +94,7 @@ This requires knowing your way around open-source UNIX software.
    * `--libby-hack` is what enables hacking the ToC.
 1. If that succeeded, eject the blank disc, reinsert it, and burn for real:
    ```sh
-   /wherever/cdrdao/dao/cdrdao write --device /dev/meow --driver generic-mmc-raw --libby-hack -n /wherever/spc-scmd4-mechadump/
+   /wherever/cdrdao/dao/cdrdao write --device /dev/meow --driver generic-mmc-raw --libby-hack -n /wherever/spc-scmd4-mechadump/silence.toc
    ```
 1. Place `spc-scmd4-mechadump.elf` onto your USB stick.
 1. Put the USB stick into one of your PS2's USB ports.
